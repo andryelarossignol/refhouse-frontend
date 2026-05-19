@@ -1,36 +1,16 @@
-type NotificationItem = {
-  title: string
-  message: string
-  age: string
+type HomeNotificationsProps = {
+  avisos?: any[]
 }
 
-const notifications: NotificationItem[] = [
-  {
-    title: 'AVISO IMPORTANTE',
-    message: 'Reuniao obrigatoria de arbitros agendada para 20/04.',
-    age: 'Há 1 dia',
-  },
-  {
-    title: 'DIRETRIZ',
-    message: 'Lembrete: Chegar com 30 minutos de antecedencia a todas as partidas.',
-    age: 'Há 2 dias',
-  },
-  {
-    title: 'REGULAMENTO',
-    message: 'O uso do uniforme oficial RefHouse e obrigatorio em todas as atuacoes.',
-    age: 'Há 3 dias',
-  },
-  {
-    title: 'NOVA ESCALA',
-    message: 'Verifique suas novas partidas em Proximas Escalas.',
-    age: 'Há 12 horas',
-  },
-  {
-    title: 'ATUALIZACAO DE REGRAS',
-    message: 'Curso de revisao online disponivel.',
-    age: 'Há 4 dias',
-  },
-]
+// Converte a data do banco para "Há X horas" ou "Há X dias"
+function formatarTempo(dataIso: string) {
+  if (!dataIso) return ''
+  const diff = new Date().getTime() - new Date(dataIso).getTime()
+  const horas = Math.floor(diff / (1000 * 60 * 60))
+  if (horas < 1) return 'Agora mesmo'
+  if (horas < 24) return `Há ${horas} hora${horas > 1 ? 's' : ''}`
+  return `Há ${Math.floor(horas / 24)} dia${Math.floor(horas / 24) > 1 ? 's' : ''}`
+}
 
 function NoticeIcon() {
   return (
@@ -41,41 +21,38 @@ function NoticeIcon() {
   )
 }
 
-export function HomeNotifications() {
+export function HomeNotifications({ avisos }: HomeNotificationsProps) {
   return (
     <aside className="notifications-panel" aria-label="Notificacoes">
       <div className="notifications-header">
         <div>
           <h2>Notificações</h2>
         </div>
-        <button type="button" className="notifications-mark-read">
-          Marcar todas como lidas
-        </button>
+        {/* Botão de "Marcar como lidas" removido daqui */}
       </div>
 
-      <div className="notifications-tabs">
-        <button type="button" className="notifications-tab notifications-tab-active">
-          Não Lidas
-        </button>
-        <button type="button" className="notifications-tab">
-          Lidas
-        </button>
-      </div>
+      {/* Abas "Lidas / Não lidas" removidas daqui */}
 
-      <div className="notifications-list">
-        {notifications.map((notification) => (
-          <article key={notification.title} className="notification-item">
-            <div className="notification-icon">
-              <NoticeIcon />
-            </div>
-            <div className="notification-copy">
-              <p>
-                <strong>{notification.title}</strong> • {notification.age}
-              </p>
-              <span>{notification.message}</span>
-            </div>
-          </article>
-        ))}
+      <div className="notifications-list" style={{ marginTop: '0.5rem' }}>
+        {!avisos || avisos.length === 0 ? (
+          <div style={{ padding: '2rem', textAlign: 'center', color: '#6b7280' }}>
+            Nenhuma notificação no momento.
+          </div>
+        ) : (
+          avisos.map((aviso) => (
+            <article key={aviso.id} className="notification-item">
+              <div className="notification-icon">
+                <NoticeIcon />
+              </div>
+              <div className="notification-copy">
+                <p>
+                  <strong>{aviso.titulo || 'AVISO'}</strong> • {formatarTempo(aviso.criado_em)}
+                </p>
+                <span>{aviso.mensagem}</span>
+              </div>
+            </article>
+          ))
+        )}
       </div>
     </aside>
   )

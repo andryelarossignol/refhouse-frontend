@@ -1,123 +1,147 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { SuccessIcon } from '../components/SuccessIcon'
-import { DashboardLayout } from '../components/home/DashboardLayout'
-import { LockedCalendarIllustration } from '../components/home/LockedCalendarIllustration'
+import api from '../services/api'
+import { ArbitroLayout } from '../components/layouts/ArbitroLayout'
 
-type AvailabilityState = 'form' | 'submitted' | 'locked'
+const SuccessIcon = () => (
+  <svg viewBox="0 0 24 24" fill="#22c55e" width="64" height="64" style={{ margin: '0 auto 1rem', display: 'block' }}>
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+  </svg>
+)
 
-type DayAvailability = {
-  label: string
-  date: string
-  slots: string[]
-}
-
-const availabilityDays: DayAvailability[] = [
-  { label: 'Sábado', date: '14/04', slots: ['10:00', '12:00', '14:00', '16:00'] },
-  { label: 'Domingo', date: '15/04', slots: ['10:00', '12:00', '14:00', '16:00'] },
-  { label: 'Sábado', date: '14/04', slots: ['10:00', '12:00', '14:00', '16:00'] },
-]
-
-function AvailabilityFormCard({ onSubmit }: { onSubmit: () => void }) {
-  return (
-    <section className="availability-card">
-      <div className="availability-card-copy">
-        <h1>
-          Disponibilidade:
-          <span> Semana 14 a 20 de Abril</span>
-        </h1>
-        <p>
-          Informe sua disponibilidade semanal para atuar como árbitro de mesa ou quadra. Depois de confirmar escolha jogos
-          específicos para demonstrar disponibilidade
-        </p>
-      </div>
-
-      <section className="availability-panel">
-        <div className="availability-panel-copy">
-          <h2>Disponibilidade de Semana</h2>
-          <p>Defina horários que voce esta disponivel para atuar</p>
-        </div>
-
-        <div className="availability-grid">
-          {availabilityDays.map((day, index) => (
-            <article key={`${day.label}-${index}`} className="availability-day-card">
-              <strong>
-                {day.label} - {day.date}
-              </strong>
-
-              <div className="availability-slot-list">
-                {day.slots.map((slot) => (
-                  <label key={`${day.label}-${slot}`} className="availability-slot">
-                    <input type="checkbox" />
-                    <span>{slot}</span>
-                  </label>
-                ))}
-              </div>
-            </article>
-          ))}
-        </div>
-
-        <div className="availability-actions">
-          <button type="button" className="dashboard-button availability-submit-button" onClick={onSubmit}>
-            Enviar Disponibilidade
-          </button>
-        </div>
-      </section>
-    </section>
-  )
-}
-
-function AvailabilitySuccessModal({ onBackHome }: { onBackHome: () => void }) {
-  return (
-    <div className="availability-modal-backdrop">
-      <div className="availability-success-modal" role="dialog" aria-modal="true" aria-labelledby="availability-success-title">
-        <SuccessIcon />
-
-        <div className="availability-success-copy">
-          <h2 id="availability-success-title">Disponibilidade registrada com Sucesso!</h2>
-          <p>
-            Em breve voce poderá checar a escala de jogos na aba: Minhas Escalas, fique atento.
-          </p>
-        </div>
-
-        <button type="button" className="dashboard-button availability-success-button" onClick={onBackHome}>
-          Voltar a tela de home
-        </button>
-      </div>
-    </div>
-  )
-}
-
-function AvailabilityLockedCard({ onBackHome }: { onBackHome: () => void }) {
-  return (
-    <section className="availability-card">
-      <div className="availability-card-copy availability-card-copy-locked">
-        <h1>Disponibilidade:</h1>
-        <p>Aguarde. A tabela de jogos desta semana ainda não foi liberada pelo administrador.</p>
-      </div>
-
-      <section className="availability-empty-state">
-        <LockedCalendarIllustration />
-        <h2>Disponibilidade não liberada</h2>
-        <button type="button" className="dashboard-button availability-empty-button" onClick={onBackHome}>
-          Voltar a tela de home
-        </button>
-      </section>
-    </section>
-  )
-}
+interface DiaAgenda { data: string; horarios: string[]; }
+interface Periodo { id: number; inicio_jogos: string; fim_jogos: string; }
 
 export function AvailabilityPage() {
   const navigate = useNavigate()
-  const [state, setState] = useState<AvailabilityState>(() => (window.location.hash === '#sem-disponibilidade' ? 'locked' : 'form'))
+  const [loading, setLoading] = useState(true)
+  const [submitting, setSubmitting] = useState(false)
+  const [mensagemVazia, setMensagemVazia] = useState('')
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
+
+  const [layoutData, setLayoutData] = useState<any>(null)
+  const [periodo, setPeriodo] = useState<Periodo | null>(null)
+  const [agenda, setAgenda] = useState<DiaAgenda[]>([])
+  const [selecionados, setSelecionados] = useState<Record<string, string[]>>({})
+
+  const user = JSON.parse(localStorage.getItem('@Refhouse:user') || '{}')
+  const nomeUsuario = layoutData?.arbitro?.nome || user.nome || 'Árbitro'
+
+  useEffect(() => {
+    async function carregarDados() {
+      try {
+        setLoading(true)
+        const [dashRes, agendaRes] = await Promise.all([api.get('/arbitros/dashboard'), api.get('/disponibilidade/agenda')])
+        setLayoutData(dashRes.data)
+
+        if (agendaRes.data.mensagem) {
+          setMensagemVazia(agendaRes.data.mensagem)
+        } else {
+          setPeriodo(agendaRes.data.periodo)
+          setAgenda(agendaRes.data.agenda)
+        }
+      } catch (error) {
+        console.error("Erro ao carregar dados:", error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    carregarDados()
+  }, [])
+
+  const formatarDataCard = (dataIso: string) => {
+    const dataObj = new Date(dataIso + 'T00:00:00') 
+    const diasSemana = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']
+    return `${diasSemana[dataObj.getDay()]} - ${String(dataObj.getDate()).padStart(2, '0')}/${String(dataObj.getMonth() + 1).padStart(2, '0')}`
+  }
+
+  const formatarSemanaTitulo = () => {
+    if (!periodo) return '';
+    const inicio = new Date(periodo.inicio_jogos).toLocaleDateString('pt-BR', {timeZone: 'UTC'})
+    const fim = new Date(periodo.fim_jogos).toLocaleDateString('pt-BR', {timeZone: 'UTC'})
+    return `Semana ${inicio.slice(0,5)} a ${fim.slice(0,5)}`
+  }
+
+  const handleToggleHorario = (data: string, hora: string) => {
+    setSelecionados(prev => {
+      const horariosDoDia = prev[data] || []
+      if (horariosDoDia.includes(hora)) return { ...prev, [data]: horariosDoDia.filter(h => h !== hora) }
+      return { ...prev, [data]: [...horariosDoDia, hora] }
+    })
+  }
+
+  const handleEnviar = async () => {
+    if (!periodo) return;
+    const horariosEnviados = Object.keys(selecionados).map(d => ({ data: d, horarios: selecionados[d] })).filter(item => item.horarios.length > 0) 
+    if (horariosEnviados.length === 0 && !window.confirm("Deseja enviar sua disponibilidade em branco?")) return;
+
+    try {
+      setSubmitting(true)
+      await api.post('/disponibilidade/enviar', { periodoColetaId: periodo.id, horariosDisponiveis: horariosEnviados })
+      setShowSuccessModal(true)
+    } catch (error: any) {
+      alert(error.response?.data?.erro || "Erro ao salvar disponibilidade.")
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  if (loading) return <ArbitroLayout nomeUsuario={nomeUsuario}><div style={{ padding: '2rem', textAlign: 'center' }}>Buscando agenda...</div></ArbitroLayout>
 
   return (
-    <DashboardLayout>
-      <section className="dashboard-content availability-content">
-        {state === 'locked' ? <AvailabilityLockedCard onBackHome={() => navigate('/home')} /> : <AvailabilityFormCard onSubmit={() => setState('submitted')} />}
-      </section>
+    <ArbitroLayout nomeUsuario={nomeUsuario} avisos={layoutData?.avisos} breadcrumbs={[{ label: 'Disponibilidade' }]}>
+      <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+        <div style={{ marginBottom: '2rem' }}>
+          <h1 style={{ fontSize: '1.8rem', color: '#111', margin: '0 0 0.5rem 0', display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
+            Disponibilidade: <span style={{ fontSize: '1.2rem', color: '#6b7280', fontWeight: 500 }}>{periodo ? formatarSemanaTitulo() : ''}</span>
+          </h1>
+          <p style={{ color: '#4b5563', fontSize: '0.95rem' }}>Informe sua disponibilidade semanal para atuar como árbitro.</p>
+        </div>
 
-      {state === 'submitted' ? <AvailabilitySuccessModal onBackHome={() => navigate('/home')} /> : null}
-    </DashboardLayout>
+        <div className="dashboard-card" style={{ padding: '2rem' }}>
+          {mensagemVazia ? (
+            <div style={{ textAlign: 'center', padding: '3rem 1rem', color: '#6b7280' }}><h2>Nenhuma coleta ativa</h2><p>{mensagemVazia}</p></div>
+          ) : (
+            <>
+              <h2 style={{ fontSize: '1.1rem', color: '#111', marginBottom: '0.5rem' }}>Disponibilidade da Semana</h2>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
+                {agenda.map(dia => (
+                  <div key={dia.data} style={{ border: '1px solid #e5e7eb', borderRadius: '8px', padding: '1.2rem', backgroundColor: '#fff' }}>
+                    <h3 style={{ margin: '0 0 1rem 0', fontSize: '1rem', color: '#111' }}>{formatarDataCard(dia.data)}</h3>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
+                      {dia.horarios.map(hora => {
+                        const estaMarcado = selecionados[dia.data]?.includes(hora) || false
+                        return (
+                          <label key={hora} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', fontSize: '0.9rem', color: '#374151' }}>
+                            <input type="checkbox" checked={estaMarcado} onChange={() => handleToggleHorario(dia.data, hora)} style={{ width: '16px', height: '16px', accentColor: '#ea580c', cursor: 'pointer' }} />
+                            {hora}
+                          </label>
+                        )
+                      })}
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'flex-end', borderTop: '1px solid #e5e7eb', paddingTop: '1.5rem' }}>
+                <button className="btn-salvar" onClick={handleEnviar} disabled={submitting} style={{ padding: '0.8rem 2rem', backgroundColor: '#ea580c', color: 'white', border: 'none', borderRadius: '6px', fontWeight: 'bold', cursor: 'pointer' }}>
+                  {submitting ? 'Enviando...' : 'Enviar Disponibilidade'}
+                </button>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+
+      {showSuccessModal && (
+        <div className="profile-modal-backdrop" style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }}>
+          <div className="profile-success-modal" style={{ backgroundColor: 'white', padding: '2.5rem', borderRadius: '12px', textAlign: 'center', maxWidth: '400px', width: '90%' }}>
+            <SuccessIcon />
+            <h2 style={{ margin: '1rem 0', color: '#111', fontSize: '1.5rem' }}>Disponibilidade Enviada!</h2>
+            <p style={{ color: '#6b7280', marginBottom: '2rem' }}>A sua agenda foi recebida pelo administrador e você poderá ser escalado.</p>
+            <button className="dashboard-button" onClick={() => { setShowSuccessModal(false); navigate('/home') }} style={{ width: '100%', padding: '0.8rem', backgroundColor: '#ea580c', color: 'white', border: 'none', borderRadius: '6px', fontWeight: 'bold', cursor: 'pointer' }}>Voltar ao Início</button>
+          </div>
+        </div>
+      )}
+    </ArbitroLayout>
   )
 }

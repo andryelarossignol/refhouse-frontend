@@ -9,7 +9,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem 1.25rem;
+  padding: 4rem 1.25rem;
   background:
     radial-gradient(circle at top, rgba(255, 132, 56, 0.08), transparent 26%),
     linear-gradient(180deg, #f3f4f7 0%, #e9ecf2 100%);
@@ -19,7 +19,7 @@
   width: min(100%, 760px);
   display: grid;
   justify-items: center;
-  gap: 2.75rem;
+  gap: 3.5rem;
 }
 
 .brand-logo {
@@ -43,9 +43,17 @@
   line-height: 1;
 }
 
+.brand-logo-img {
+  width: 100%;
+  max-width: 260px; /* Tamanho excelente que fica legível no PC e não quebra no celular */
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
 .auth-card,
 .success-card {
-  width: min(100%, 708px);
+  width: min(100%, 670px);
   display: grid;
   justify-items: center;
   gap: 1.7rem;
@@ -89,7 +97,7 @@
 .auth-form {
   width: 100%;
   display: grid;
-  gap: 1rem;
+  gap: 1.2rem;
 }
 
 .auth-field {
@@ -100,7 +108,7 @@
 .auth-field input {
   width: 100%;
   min-height: 3.5rem;
-  border: 1px solid #d7dbe4;
+  border: 2px solid #d7dbe4;
   border-radius: 0.65rem;
   padding: 0.95rem 1rem 0.95rem 3rem;
   background: #f8f9fc;
@@ -764,6 +772,12 @@
 
   .dashboard-sidebar {
     top: 4rem;
+  }
+  .auth-card {
+    padding: 2.2rem 1.25rem 1.5rem;
+  }
+  .auth-page {
+    padding: 2rem 1rem;; 
   }
 }
 
@@ -1514,6 +1528,1019 @@
 
 .availability-empty-button {
   min-width: 10.5rem;
+}
+.quick-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  background: transparent;
+  border: 1px solid #ff6b23;
+  color: #ff6b23;
+  border-radius: 0.45rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.quick-action-btn:hover {
+  background: rgba(255, 107, 35, 0.05);
+}
+
+.quick-action-btn svg {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+/* Tabela de Partidas */
+.matches-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.85rem;
+}
+
+.matches-table th {
+  padding: 0.75rem 0.5rem;
+  border-bottom: 2px solid #eaedf2;
+  color: #171717;
+  font-weight: 700;
+}
+
+.matches-table td {
+  padding: 1rem 0.5rem;
+  border-bottom: 1px solid #eaedf2;
+  color: #4a4d53;
+  vertical-align: top;
+}
+
+.matches-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* OVERLAY ESCURO E CENTRALIZAÇÃO */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  backdrop-filter: blur(2px);
+}
+
+/* CAIXA BRANCA DO MODAL */
+.modal-content {
+  background: #fff;
+  width: 100%;
+  max-width: 750px;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  overflow: hidden;
+  font-family: inherit;
+}
+
+/* CABEÇALHO DO MODAL */
+.modal-header {
+  padding: 1.5rem 2rem 1rem;
+}
+.modal-subtitle {
+  text-align: center;
+  margin-top: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+  font-weight: 500;
+  color: #333;
+}
+
+/* GRID DE 2 COLUNAS */
+.modal-body-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  padding: 1.5rem 2rem;
+}
+
+.column-title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+  color: #171717;
+}
+
+/* ESTILIZAÇÃO DO SELECT */
+.form-group {
+  margin-bottom: 1.25rem;
+}
+.form-group label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #4a4d53;
+  margin-bottom: 0.5rem;
+}
+.modal-select {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  background-color: #fff;
+  font-size: 0.9rem;
+  color: #333;
+  outline: none;
+  appearance: auto; /* Mantém a setinha nativa bonitinha */
+}
+.modal-select:focus {
+  border-color: #ff6b23;
+}
+
+/* RODAPÉ E BOTÕES */
+.modal-footer {
+  padding: 1.5rem 2rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.btn-cancelar {
+  background: #7a7a7a;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.btn-cancelar:hover {
+  background: #606060;
+}
+
+.btn-salvar {
+  background: #ff6b23;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.btn-salvar:hover {
+  background: #e55a16;
+}
+
+/* ========================================== */
+/* MODAL DE SUCESSO                           */
+/* ========================================== */
+
+.success-modal {
+  max-width: 450px;
+  text-align: center;
+  padding: 3rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.success-icon-container {
+  background-color: #22c55e; /* Verde do Check */
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  box-shadow: 0 4px 10px rgba(34, 197, 94, 0.3);
+}
+
+.success-modal-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #111;
+  margin: 0;
+}
+
+.btn-fechar-success {
+  background-color: #ff6b23;
+  color: white;
+  border: none;
+  padding: 0.75rem 3rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-top: 0.5rem;
+}
+
+.btn-fechar-success:hover {
+  background-color: #e55a16;
+}
+
+/* ========================================== */
+/* PÁGINA: GERENCIAR ÁRBITROS                 */
+/* ========================================== */
+
+.page-header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* Container da Barra de Busca */
+.search-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 2rem;
+  background-color: #fff;
+  transition: border-color 0.2s;
+}
+
+.search-container:focus-within {
+  border-color: #ff6b23;
+}
+
+.search-input {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 0.95rem;
+  color: #333;
+  background: transparent;
+}
+
+.search-input::placeholder {
+  color: #9ca3af;
+}
+
+/* Responsividade para a Tabela */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* Botões de Ação na Tabela */
+.action-buttons-row {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon-action-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.icon-action-btn:hover {
+  background-color: #f3f4f6;
+}
+
+.icon-action-btn.trash-btn:hover {
+  background-color: #fee2e2;
+}
+
+/* ========================================== */
+/* MODAL DE CADASTRO (Complementos)           */
+/* ========================================== */
+
+.modal-input {
+  width: 100%;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background-color: #fff;
+  font-size: 0.95rem;
+  color: #333;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+
+.modal-input:focus {
+  border-color: #ff6b23;
+}
+
+.modal-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.btn-cancelar-outline {
+  background: white;
+  color: #4a4d53;
+  border: 1px solid #d1d5db;
+  padding: 0.6rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-cancelar-outline:hover {
+  background: #f3f4f6;
+}
+
+.info-box {
+  background-color: #e0f2fe;
+  color: #0369a1;
+  padding: 1rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  margin-top: 1.5rem;
+  line-height: 1.5;
+}
+
+.info-box svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* ========================================== */
+/* ESTILOS DOS NOVOS MODAIS (SUCESSO/DELETE)  */
+/* ========================================== */
+
+/* Modais de Confirmação / Sucesso centralizados */
+.success-card, .confirm-card {
+  text-align: center;
+  padding: 3rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  max-width: 450px !important;
+}
+
+.success-card h2, .confirm-card h2 {
+  font-size: 1.4rem;
+  color: #111;
+  margin: 0;
+}
+
+.confirm-card p {
+  color: #666;
+  margin-top: -0.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Container para alinhar botões lado a lado */
+.success-buttons-row, .confirm-buttons-row {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  width: 100%;
+  justify-content: center;
+}
+
+/* Botões do print de sucesso */
+.success-buttons-row button {
+  padding: 0.7rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  width: 150px;
+}
+
+/* Botão Cinza (Novo Cadastro) */
+.btn-gray {
+  background-color: #71717a; /* Cor cinza do print */
+  color: white;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-gray:hover {
+  background-color: #52525b;
+}
+
+/* Botão Vermelho de Perigo (Exclusão) */
+.btn-danger {
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-danger:hover {
+  background-color: #dc2626;
+}
+
+.btn-danger:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Modificadores para o Modal de Visualização (Olho) */
+.view-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.view-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.view-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.view-value {
+  font-size: 1rem;
+  color: #111;
+  font-weight: 500;
+  background-color: #f9fafb;
+  padding: 0.5rem 0.8rem;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+}
+/* ========================================== */
+/* TELA DE GESTÃO DE DISPONIBILIDADE          */
+/* ========================================== */
+
+.availability-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 900px) {
+  .availability-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Área de Upload Tracejada */
+.upload-area {
+  border: 1.5px dashed #d1d5db;
+  border-radius: 8px;
+  padding: 2.5rem 1rem;
+  text-align: center;
+  margin: 0 auto 1.5rem;
+  max-width: 400px;
+  background-color: #fcfcfc;
+  transition: border-color 0.2s;
+}
+
+.upload-area:hover {
+  border-color: #ff6b23;
+}
+
+.upload-status {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: #4b5563;
+}
+
+/* Inputs de Data Alinhados */
+.date-inputs-row {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.date-input-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.date-input-group span {
+  font-size: 0.9rem;
+  color: #4b5563;
+  font-weight: 500;
+}
+
+/* Status de Coleta Aberta (Box Verde Claro) */
+.coleta-status-alert {
+  background-color: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #166534;
+  padding: 0.8rem 1rem;
+  border-radius: 6px;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+/* Tag Verde "Em andamento" */
+.tag-andamento {
+  background-color: #dcfce7;
+  color: #16a34a;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+  text-transform: uppercase;
+}
+
+/* Linhas de Acompanhamento (Progress Bar) */
+.coletas-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.coleta-item-box {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1.5rem;
+  background-color: #fff;
+}
+
+.coleta-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.coleta-item-body {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* Barra de Progresso */
+.progress-bar-container {
+  flex: 1;
+  height: 8px;
+  background-color: #e5e7eb;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background-color: #ff6b23;
+  border-radius: 4px;
+  transition: width 0.5s ease-in-out;
+}
+
+/* Botão Vazado Vermelho (Encerrar Coleta) */
+.btn-outline-danger {
+  background: white;
+  color: #dc2626;
+  border: 1px solid #dc2626;
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+  white-space: nowrap;
+}
+
+.btn-outline-danger:hover {
+  background: #fef2f2;
+}
+
+/* ========================================== */
+/* STEPPER (Trilha de Passos)                 */
+/* ========================================== */
+.stepper-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 800px;
+  margin: 0 auto 3rem auto;
+  position: relative;
+}
+
+.stepper-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  flex: 1;
+}
+
+.stepper-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #e5e7eb;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  transition: all 0.3s;
+}
+
+.stepper-circle.active {
+  background-color: #ff6b23;
+  color: white;
+}
+
+.stepper-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.stepper-label.active {
+  color: #111;
+}
+
+.stepper-line {
+  position: absolute;
+  top: 24px;
+  left: 50%;
+  width: 100%;
+  height: 2px;
+  background-color: #e5e7eb;
+  z-index: -1;
+}
+
+.stepper-line.active {
+  background-color: #ff6b23;
+}
+
+/* ========================================== */
+/* ESTILOS ESPECÍFICOS DOS PASSOS             */
+/* ========================================== */
+.step-card {
+  padding: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.step-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #111;
+  margin: 0 0 1rem 0;
+}
+
+.step-divider {
+  border: 0;
+  height: 1px;
+  background: #e5e7eb;
+  margin-bottom: 1.5rem;
+}
+
+.step-2-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1.5rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.resumo-box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.resumo-label.highlight {
+  color: #ff6b23;
+  font-weight: 600;
+  display: block;
+}
+
+.resumo-value {
+  color: #4b5563;
+  font-size: 0.95rem;
+}
+
+/* ========================================== */
+/* DROPDOWN CUSTOMIZADO DE ÁRBITROS (Troca)   */
+/* ========================================== */
+.referee-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 160px;
+}
+
+.custom-select-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.custom-select-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #333;
+  transition: all 0.2s;
+}
+
+.custom-select-box:hover {
+  background-color: #f9fafb;
+  border-color: #d1d5db;
+}
+
+.custom-select-box.open {
+  border-color: #6366f1;
+  background-color: #fff;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+
+.custom-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 200px;
+  background-color: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  z-index: 50;
+  margin-top: 4px;
+  padding: 0.5rem 0;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.dropdown-item {
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  color: #374151;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.2s;
+}
+
+.dropdown-item:hover {
+  background-color: #f3f4f6;
+}
+
+.dropdown-item.empty {
+  color: #9ca3af;
+  font-style: italic;
+  cursor: default;
+}
+
+.dropdown-item.empty:hover {
+  background-color: #fff;
+}
+
+.badge-disponivel {
+  background-color: #dcfce7;
+  color: #166534;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  text-transform: uppercase;
+}
+/* ========================================== */
+/* TELA DE HISTÓRICO                          */
+/* ========================================== */
+
+/* Badges de Status da Escala */
+.badge-agendado {
+  background-color: #22c55e;
+  color: white;
+  padding: 0.3rem 1rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.badge-finalizada {
+  background-color: #9ca3af; /* Cinza do seu print */
+  color: white;
+  padding: 0.3rem 1rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: inline-block;
+}
+
+/* Ajustes Especiais para a Tabela dentro do Modal */
+.modal-details-table th {
+  background-color: transparent !important;
+  border-top: none !important;
+  border-bottom: 2px solid #e5e7eb;
+  padding-left: 0 !important;
+}
+
+.modal-details-table td {
+  padding-left: 0 !important;
+  border-bottom: 1px solid #f3f4f6;
+  vertical-align: top;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.modal-details-table tr:last-child td {
+  border-bottom: none;
+}
+/* ========================================== */
+/* TELA DE PERFIL DO ADMINISTRADOR            */
+/* ========================================== */
+
+.perfil-grid {
+  display: grid;
+  grid-template-columns: 1fr 2.5fr; /* Cartão Profissional (menor) | Segurança (maior) */
+  gap: 1.5rem;
+  max-width: 1200px;
+}
+
+.perfil-card-full {
+  grid-column: 1 / -1; /* Ocupa a linha inteira */
+}
+
+.perfil-card {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.perfil-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 1rem;
+}
+
+/* Campos de Leitura (Cinzas e Desabilitados) */
+.readonly-input {
+  background-color: #f9fafb !important;
+  color: #6b7280;
+  border-color: #e5e7eb !important;
+  cursor: not-allowed;
+}
+
+/* Grid especial para a linha de Segurança (3 colunas iguais) */
+.modal-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+/* ========================================== */
+/* ESTILOS DA TELA DE AVISOS                  */
+/* ========================================== */
+
+/* Abas (Tabs) */
+.tabs-container {
+  display: flex;
+  gap: 1.5rem;
+  border-bottom: 2px solid #e5e7eb;
+  margin-bottom: 1.5rem;
+}
+
+.tab-button {
+  background: none;
+  border: none;
+  padding: 0.75rem 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #6b7280;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s;
+}
+
+.tab-button:hover {
+  color: #111;
+}
+
+.tab-button.active {
+  color: #111;
+}
+
+.tab-button.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #111;
+}
+
+/* Lista e Cards de Avisos */
+.avisos-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.aviso-card {
+  display: flex;
+  background-color: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 1.25rem;
+  gap: 1.5rem;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.aviso-icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Cores específicas para os fundos dos ícones baseados na categoria */
+.aviso-icon-box.alerta { background-color: #fff7ed; }
+.aviso-icon-box.geral { background-color: #f3f4f6; }
+.aviso-icon-box.regra { background-color: #f3f4f6; }
+
+.aviso-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.aviso-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.aviso-categoria {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #6b7280;
+  letter-spacing: 0.5px;
+}
+
+.aviso-titulo {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #111;
+  text-transform: uppercase;
+}
+
+.aviso-datas {
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+.aviso-mensagem {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #333;
+  line-height: 1.5;
+}
+
+.aviso-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
 }
 
 @media (max-width: 860px) {

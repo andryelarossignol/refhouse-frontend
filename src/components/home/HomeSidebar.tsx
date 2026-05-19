@@ -1,5 +1,4 @@
 import { NavLink } from 'react-router-dom'
-import { HomeBrand } from './HomeBrand'
 
 type HomeSidebarProps = {
   open: boolean
@@ -12,7 +11,7 @@ const items = [
   { label: 'Minhas Escalas', to: '/minhas-escalas' },
   { label: 'Meu Perfil', to: '/meu-perfil' },
   { label: 'Suporte', to: '/suporte' },
-  { label: 'Sair', to: '/login' },
+  { label: 'Sair', to: '/login' }, // O ideal seria uma função de logout, mas mantive o link
 ]
 
 function HomeIcon() {
@@ -64,8 +63,23 @@ export function HomeSidebar({ open, onClose }: HomeSidebarProps) {
   return (
     <>
       <div className={`dashboard-sidebar-backdrop ${open ? 'dashboard-sidebar-backdrop-visible' : ''}`} onClick={onClose} />
+      
       <aside className={`dashboard-sidebar ${open ? 'dashboard-sidebar-open' : ''}`} aria-label="Menu lateral">
-        <HomeBrand inverted />
+        
+        {/* AQUI ESTÁ A CORREÇÃO: O LOGO TRANSPARENTE COM FILTER INVERT E ALINHAMENTO */}
+        <div style={{ padding: '1.5rem', display: 'flex', justifyContent: 'center' }}>
+          <img 
+            src="/logo-refhouse.svg" 
+            alt="RefHouse" 
+            style={{ 
+              height: '36px', 
+              width: 'auto',
+              // Como a sidebar original é escura, o filter: invert(1) deixa o logo branco!
+              // Se sua sidebar for branca, basta apagar essa linha do filter.
+              filter: 'brightness(0) invert(1)' 
+            }} 
+          />
+        </div>
 
         <nav className="dashboard-sidebar-nav">
           {items.map((item, index) => {

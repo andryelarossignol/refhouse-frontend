@@ -6,9 +6,11 @@ import { HomeSidebar } from './HomeSidebar'
 
 type DashboardLayoutProps = {
   children: ReactNode
+  avisos?: any[]          // Recebe os avisos da HomePage
+  nomeUsuario?: string    // Recebe o nome da HomePage
 }
 
-export function DashboardLayout({ children }: DashboardLayoutProps) {
+export function DashboardLayout({ children, avisos, nomeUsuario }: DashboardLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [notificationsOpen, setNotificationsOpen] = useState(false)
 
@@ -34,12 +36,17 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
 
   return (
     <div className="dashboard-page">
-      <HomeHeader onToggleMenu={toggleSidebar} onToggleNotifications={toggleNotifications} />
+      <HomeHeader 
+        onToggleMenu={toggleSidebar} 
+        onToggleNotifications={toggleNotifications} 
+        nomeUsuario={nomeUsuario}
+        temAvisos={avisos && avisos.length > 0}
+      />
       <HomeSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       <div className="dashboard-shell">
         {children}
-        {notificationsOpen ? <HomeNotifications /> : null}
+        {notificationsOpen ? <HomeNotifications avisos={avisos} /> : null}
       </div>
     </div>
   )
