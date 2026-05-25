@@ -1,0 +1,146 @@
+/* ==========================================
+   TABLES: Tabelas de dados
+   ========================================== */
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.matches-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.85rem;
+}
+
+.matches-table th {
+  padding: 0.75rem 0.5rem;
+  border-bottom: 2px solid #eaedf2;
+  color: #171717;
+  font-weight: 700;
+}
+
+.matches-table td {
+  padding: 1rem 0.5rem;
+  border-bottom: 1px solid #eaedf2;
+  color: #4a4d53;
+  vertical-align: top;
+}
+
+.matches-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Botões de ação na tabela */
+.action-buttons-row {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Page header com título + botão */
+.page-header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* Badges de status */
+.badge-agendado {
+  background-color: #22c55e;
+  color: white;
+  padding: 0.3rem 1rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.badge-finalizada {
+  background-color: #9ca3af;
+  color: white;
+  padding: 0.3rem 1rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: inline-block;
+}
+
+/* View grid (modal de visualização) */
+.view-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.view-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.view-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.view-value {
+  font-size: 1rem;
+  color: #111;
+  font-weight: 500;
+  background-color: #f9fafb;
+  padding: 0.5rem 0.8rem;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+}
+
+/* Tabela interna no modal de detalhes */
+.modal-details-table th {
+  background-color: transparent !important;
+  border-top: none !important;
+  border-bottom: 2px solid #e5e7eb;
+  padding-left: 0 !important;
+}
+
+.modal-details-table td {
+  padding-left: 0 !important;
+  border-bottom: 1px solid #f3f4f6;
+  vertical-align: top;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.modal-details-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* ── Badges de Função (Mesa / Quadra) ────────────────────────── */
+.badge-funcao {
+  display: inline-block;
+  padding: 0.2rem 0.65rem;
+  border-radius: 4px;
+  font-size: 0.77rem;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+
+.badge-quadra {
+  background-color: #dbeafe;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+}
+
+.badge-mesa {
+  background-color: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fde68a;
+}

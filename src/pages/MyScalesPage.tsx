@@ -1,15 +1,11 @@
-import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import api from '../services/api'
+import { useArbitroDashboard } from '../hooks/useArbitroDashboard'
 import { ArbitroLayout } from '../components/layouts/ArbitroLayout'
+import type { EscalaArbitro } from '../types'
 
-// ==========================================
-// ÍCONES
-// ==========================================
 function PinIcon() { return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s6-5.5 6-10a6 6 0 1 0-12 0c0 4.5 6 10 6 10Z" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" /><circle cx="12" cy="10" r="2.1" fill="currentColor" /></svg> }
 function WhistleIcon() { return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 12.5a4.5 4.5 0 1 0 9 0c0-1.4-.5-2.7-1.3-3.6L17 6.5h-4.1L10 9H7.9A2.9 2.9 0 0 0 5 11.9v.6Z" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round" /><circle cx="9.2" cy="12.5" r="1.4" fill="currentColor" /></svg> }
 
-// Ícone do estado vazio (trazido para cá)
 function LockedCalendarIllustration() {
   return (
     <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="#d1d5db" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" style={{ margin: '0 auto 1rem', display: 'block' }}>
@@ -18,13 +14,12 @@ function LockedCalendarIllustration() {
   )
 }
 
-function MyScalesList({ escalas }: { escalas: any[] }) {
+function MyScalesList({ escalas }: { escalas: EscalaArbitro[] }) {
   const formatarSemanaAtual = () => {
     if (!escalas || escalas.length === 0) return '';
     const dataMaisAntiga = new Date(escalas[0].data);
     const dataMaisNova = new Date(escalas[escalas.length - 1].data);
     const meses = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
-    
     if (dataMaisAntiga.getMonth() === dataMaisNova.getMonth()) {
       return `Semana ${dataMaisAntiga.getUTCDate()} a ${dataMaisNova.getUTCDate()} de ${meses[dataMaisAntiga.getMonth()]}`;
     }
@@ -43,13 +38,11 @@ function MyScalesList({ escalas }: { escalas: any[] }) {
         <h1>Minhas Escalas<span> {formatarSemanaAtual()}</span></h1>
         <p>Acompanhe seus jogos escalados e organize-se conforme seus compromissos como árbitro.</p>
       </div>
-
       <div className="my-scales-list">
         {escalas.map((scale) => {
           const { data, diaSemana } = formatarDataCard(scale.data);
           const isEncerrado = new Date(scale.data).getTime() < new Date().getTime();
           const status = isEncerrado ? 'Encerrado' : 'Agendado';
-
           return (
             <article key={scale.id} className="my-scales-card">
               <div className="my-scales-date"><strong>{data} - {diaSemana}</strong></div>
@@ -91,25 +84,7 @@ function MyScalesLocked({ onBackHome }: { onBackHome: () => void }) {
 
 export function MyScalesPage() {
   const navigate = useNavigate()
-  const [data, setData] = useState<any>(null)
-  const [loading, setLoading] = useState(true)
-
-  const user = JSON.parse(localStorage.getItem('@Refhouse:user') || '{}')
-  const nomeUsuario = data?.arbitro?.nome || user.nome || 'Árbitro'
-
-  useEffect(() => {
-    async function fetchScales() {
-      try {
-        const response = await api.get('/arbitros/dashboard') 
-        setData(response.data)
-      } catch (error) {
-        console.error("Erro ao carregar escalas:", error)
-      } finally {
-        setLoading(false)
-      }
-    }
-    fetchScales()
-  }, [])
+  const { data, loading, nomeUsuario } = useArbitroDashboard()
 
   if (loading) return <ArbitroLayout nomeUsuario={nomeUsuario}><div style={{ padding: '2rem', textAlign: 'center' }}>Carregando suas escalas...</div></ArbitroLayout>
 
@@ -117,7 +92,7 @@ export function MyScalesPage() {
 
   return (
     <ArbitroLayout nomeUsuario={nomeUsuario} avisos={data?.avisos} breadcrumbs={[{ label: 'Minhas Escalas' }]}>
-      {hasScales ? <MyScalesList escalas={data.proximas_escalas} /> : <MyScalesLocked onBackHome={() => navigate('/home')} />}
+      {hasScales ? <MyScalesList escalas={data!.proximas_escalas!} /> : <MyScalesLocked onBackHome={() => navigate('/home')} />}
     </ArbitroLayout>
   )
 }

@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { SuccessIcon } from '../components/SuccessIcon'
+import { SuccessIcon } from '../components/common/SuccessIcon'
 
 export function EmailSentPage() {
   const navigate = useNavigate()

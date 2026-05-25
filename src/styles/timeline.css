@@ -1,0 +1,134 @@
+/* ==========================================
+   TIMELINE: Calendário / Linha do Tempo
+   ========================================== */
+
+.timeline-card {
+  min-height: 100%;
+}
+
+.timeline-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.95rem;
+}
+
+.timeline-selects {
+  display: flex;
+  gap: 0.45rem;
+}
+
+.timeline-selects select,
+.timeline-nav {
+  border: 1px solid #dadfe7;
+  border-radius: 0.35rem;
+  background: #ffffff;
+  color: #404349;
+}
+
+.timeline-selects select {
+  min-width: 3.35rem;
+  padding: 0.22rem 0.5rem;
+  font-size: 0.85rem;
+}
+
+.timeline-nav {
+  width: 1.85rem;
+  height: 1.85rem;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.timeline-nav svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.timeline-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.7rem 0.4rem;
+  text-align: center;
+}
+
+.timeline-weekday {
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid #d8dce5;
+  color: #8f8f94;
+  font-weight: 700;
+}
+
+.timeline-day {
+  min-height: 2rem;
+  display: grid;
+  place-items: center;
+  font-size: 0.95rem;
+}
+
+.timeline-day-empty {
+  color: transparent;
+}
+
+.timeline-day-blue,
+.timeline-day-green {
+  border-radius: 0.28rem;
+  border: 1px solid currentColor;
+}
+
+.timeline-day-blue {
+  color: #3a74c8;
+}
+
+.timeline-day-green {
+  color: #30b655;
+}
+
+.timeline-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.timeline-legend {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+}
+
+.legend-dot {
+  width: 0.66rem;
+  height: 0.66rem;
+  border-radius: 999px;
+}
+
+.legend-dot-blue {
+  background: #356ebe;
+}
+
+.legend-dot-green {
+  background: #29b24f;
+}
+
+/* ── Responsividade ─────────────────────── */
+@media (max-width: 1080px) {
+  .timeline-card {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 720px) {
+  .timeline-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

@@ -1,0 +1,136 @@
+/* ==========================================
+   MODALS: Overlays, conteúdo e cards de estado
+   ========================================== */
+
+/* ── Overlay genérico ────────────────────── */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  backdrop-filter: blur(2px);
+}
+
+.modal-content {
+  background: #fff;
+  width: 100%;
+  max-width: 750px;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  font-family: inherit;
+}
+
+.modal-header {
+  padding: 1.5rem 2rem 1rem;
+}
+
+.modal-subtitle {
+  text-align: center;
+  margin-top: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+  font-weight: 500;
+  color: #333;
+}
+
+.modal-body-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  padding: 1.5rem 2rem;
+}
+
+.column-title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+  color: #171717;
+}
+
+.modal-footer {
+  padding: 1.5rem 2rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+/* ── Cards de sucesso / confirmação ─────── */
+.success-card,
+.confirm-card {
+  text-align: center;
+  padding: 3rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  max-width: 450px !important;
+}
+
+.success-card h2,
+.confirm-card h2 {
+  font-size: 1.4rem;
+  color: #111;
+  margin: 0;
+}
+
+.confirm-card p {
+  color: #666;
+  margin-top: -0.5rem;
+  margin-bottom: 1rem;
+}
+
+.success-buttons-row,
+.confirm-buttons-row {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  width: 100%;
+  justify-content: center;
+}
+
+.success-buttons-row button {
+  padding: 0.7rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  width: 150px;
+}
+
+.success-modal {
+  max-width: 450px;
+  text-align: center;
+  padding: 3rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.success-icon-container {
+  background-color: #22c55e;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  box-shadow: 0 4px 10px rgba(34, 197, 94, 0.3);
+}
+
+.success-modal-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #111;
+  margin: 0;
+}
+
+/* ── Responsividade ─────────────────────── */
+@media (max-width: 720px) {
+  .modal-body-grid {
+    grid-template-columns: 1fr;
+  }
+}

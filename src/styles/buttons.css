@@ -1,0 +1,239 @@
+/* ==========================================
+   BUTTONS: Todos os variantes de botão
+   ========================================== */
+
+.primary-button {
+  width: 100%;
+  min-height: 3.5rem;
+  border: 0;
+  border-radius: 0.65rem;
+  padding: 0.95rem 1.5rem;
+  background: linear-gradient(180deg, #ff6923 0%, #ff5a19 100%);
+  color: #ffffff;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 160ms ease, box-shadow 160ms ease, filter 160ms ease;
+}
+
+.primary-button:hover {
+  filter: brightness(1.02);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(255, 99, 30, 0.22);
+}
+
+.primary-button:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.text-button {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  color: #ff5f1f;
+  font-size: 0.98rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.text-button:hover {
+  text-decoration: underline;
+}
+
+.icon-button {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  color: #202020;
+  cursor: pointer;
+}
+
+.icon-button svg {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.dashboard-button {
+  min-width: 6.5rem;
+  min-height: 2.35rem;
+  border: 0;
+  border-radius: 0.5rem;
+  padding: 0.65rem 1rem;
+  background: linear-gradient(180deg, #ff7a32 0%, #ff6722 100%);
+  color: #ffffff;
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(255, 107, 35, 0.16);
+}
+
+.schedule-button {
+  align-self: end;
+}
+
+.quick-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  background: transparent;
+  border: 1px solid #ff6b23;
+  color: #ff6b23;
+  border-radius: 0.45rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.quick-action-btn:hover {
+  background: rgba(255, 107, 35, 0.05);
+}
+
+.quick-action-btn svg {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+/* Botões de ação em tabelas */
+.icon-action-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.icon-action-btn:hover {
+  background-color: #f3f4f6;
+}
+
+.icon-action-btn.trash-btn:hover {
+  background-color: #fee2e2;
+}
+
+/* Botões de formulário */
+.btn-salvar {
+  background: #ff6b23;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-salvar:hover {
+  background: #e55a16;
+}
+
+.btn-cancelar {
+  background: #7a7a7a;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-cancelar:hover {
+  background: #606060;
+}
+
+.btn-cancelar-outline {
+  background: white;
+  color: #4a4d53;
+  border: 1px solid #d1d5db;
+  padding: 0.6rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-cancelar-outline:hover {
+  background: #f3f4f6;
+}
+
+.btn-danger {
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-danger:hover {
+  background-color: #dc2626;
+}
+
+.btn-danger:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-gray {
+  background-color: #71717a;
+  color: white;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-gray:hover {
+  background-color: #52525b;
+}
+
+.btn-outline-danger {
+  background: white;
+  color: #dc2626;
+  border: 1px solid #dc2626;
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+  white-space: nowrap;
+}
+
+.btn-outline-danger:hover {
+  background: #fef2f2;
+}
+
+.btn-fechar-success {
+  background-color: #ff6b23;
+  color: white;
+  border: none;
+  padding: 0.75rem 3rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-top: 0.5rem;
+}
+
+.btn-fechar-success:hover {
+  background-color: #e55a16;
+}
+
+/* ── Responsividade ─────────────────────── */
+@media (max-width: 720px) {
+  .dashboard-button {
+    width: 100%;
+  }
+}

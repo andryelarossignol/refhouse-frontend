@@ -1,0 +1,348 @@
+/* ==========================================
+   PAGE: Perfil (árbitro e admin)
+   ========================================== */
+
+/* ── Árbitro ─────────────────────────────── */
+.profile-page {
+  display: grid;
+  gap: 1rem;
+}
+
+.profile-copy h1 {
+  margin: 0;
+  font-size: 1.85rem;
+  font-weight: 700;
+}
+
+.profile-copy p {
+  margin: 0.7rem 0 0;
+  color: #4d5057;
+  font-size: 0.95rem;
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  gap: 0.9rem;
+}
+
+.profile-card {
+  background: #ffffff;
+  border: 1px solid #d9dde5;
+  border-radius: 0.32rem;
+  box-shadow: 0 2px 6px rgba(28, 36, 51, 0.1);
+  padding: 0.95rem 1rem 1rem;
+}
+
+.profile-card-wide {
+  padding-bottom: 0.9rem;
+}
+
+.profile-card-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.8rem;
+}
+
+.profile-card-title svg {
+  width: 1rem;
+  height: 1rem;
+  color: #2f2f2f;
+}
+
+.profile-card-title h2 {
+  margin: 0;
+  font-size: 1.08rem;
+  font-weight: 700;
+}
+
+.profile-personal-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.7rem 0.9rem;
+}
+
+.profile-field {
+  display: grid;
+  gap: 0.28rem;
+}
+
+.profile-field span {
+  color: #2e2f33;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.profile-field input {
+  width: 100%;
+  min-height: 2.2rem;
+  border: 1px solid #d5dae2;
+  border-radius: 0.24rem;
+  padding: 0.5rem 0.7rem;
+  background: #ffffff;
+  color: #35373c;
+  font-size: 0.88rem;
+}
+
+.profile-field input:focus {
+  outline: none;
+  border-color: #ff6b23;
+  box-shadow: 0 0 0 3px rgba(255, 107, 35, 0.12);
+}
+
+.profile-field select {
+  min-height: 2.2rem;
+  padding: 0.5rem 0.7rem;
+  width: 100%;
+  border: 1px solid #d5dae2;
+  border-radius: 0.24rem;
+  background: #ffffff;
+  color: #35373c;
+  font-size: 0.88rem;
+}
+
+.profile-field select:focus {
+  outline: none;
+  border-color: #ff6b23;
+  box-shadow: 0 0 0 3px rgba(255, 107, 35, 0.12);
+}
+
+.profile-personal-actions {
+  display: flex;
+  align-items: end;
+  justify-content: flex-end;
+}
+
+.profile-edit-button {
+  min-width: 9.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+}
+
+.profile-edit-button svg {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+
+.profile-options-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.profile-options-group {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.profile-options-group > span {
+  color: #2e2f33;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.profile-check-option,
+.profile-radio-option {
+  display: flex;
+  align-items: center;
+  gap: 0.42rem;
+  color: #45484f;
+  font-size: 0.9rem;
+}
+
+.profile-check-option input,
+.profile-radio-option input {
+  margin: 0;
+  accent-color: #ff6b23;
+}
+
+.profile-security-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.7rem;
+}
+
+.profile-security-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.9rem;
+}
+
+.profile-password-button {
+  min-width: 8rem;
+}
+
+.profile-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(2px);
+}
+
+.profile-edit-modal,
+.profile-success-modal {
+  width: min(100%, 34rem);
+  background: #ffffff;
+  border-radius: 0.38rem;
+  box-shadow: 0 12px 28px rgba(20, 25, 35, 0.16);
+}
+
+.profile-edit-modal {
+  padding: 0.95rem 1rem 1rem;
+}
+
+.profile-edit-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.9rem;
+}
+
+.profile-edit-header h2,
+.profile-success-modal h2 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.profile-close-button {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  color: #8e9198;
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.profile-edit-form {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.profile-edit-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.7rem;
+}
+
+.profile-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.55rem;
+  margin-top: 0.85rem;
+}
+
+.profile-secondary-button {
+  min-width: 6.2rem;
+  min-height: 2.35rem;
+  border: 0;
+  border-radius: 0.5rem;
+  padding: 0.65rem 1rem;
+  background: #e6e8ee;
+  color: #535762;
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.profile-save-button {
+  min-width: 9.5rem;
+}
+
+.profile-success-modal {
+  display: grid;
+  justify-items: center;
+  gap: 1rem;
+  padding: 2rem 1.4rem 1.5rem;
+  text-align: center;
+}
+
+.profile-success-modal .success-icon {
+  width: 4rem;
+  height: 4rem;
+}
+
+.profile-success-modal h2 {
+  max-width: 18rem;
+  font-size: 1.5rem;
+  line-height: 1.15;
+}
+
+.profile-success-button {
+  min-width: 10rem;
+}
+
+/* ── Admin Perfil ────────────────────────── */
+.perfil-grid {
+  display: grid;
+  grid-template-columns: 1fr 2.5fr;
+  gap: 1.5rem;
+  max-width: 1200px;
+}
+
+.perfil-card-full {
+  grid-column: 1 / -1;
+}
+
+.perfil-card {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.perfil-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 1rem;
+}
+
+.readonly-input {
+  background-color: #f9fafb !important;
+  color: #6b7280;
+  border-color: #e5e7eb !important;
+  cursor: not-allowed;
+}
+
+/* ── Responsividade ─────────────────────── */
+@media (max-width: 860px) {
+  .profile-grid,
+  .profile-personal-grid,
+  .profile-security-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-options-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .perfil-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .profile-copy h1 {
+    font-size: 1.55rem;
+  }
+
+  .profile-edit-modal,
+  .profile-success-modal {
+    width: min(100%, 30rem);
+  }
+
+  .profile-edit-grid {
+    grid-template-columns: 1fr;
+  }
+}

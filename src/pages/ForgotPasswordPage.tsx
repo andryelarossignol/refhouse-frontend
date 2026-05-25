@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { AuthCard } from '../components/AuthCard'
+import { AuthCard } from '../components/auth/AuthCard'
 
 function MailIcon() {
   return (

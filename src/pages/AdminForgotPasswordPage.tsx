@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { AuthCard } from '../components/AuthCard'
-import api from '../services/api' // Garanta que o caminho da api está correto
+import { AuthCard } from '../components/auth/AuthCard'
+import { esqueciSenha } from '../services/authService'
 
 function MailIcon() {
   return (
@@ -41,10 +41,7 @@ export function AdminForgotPasswordPage() {
     setTemErro(false)
 
     try {
-      // IMPORTANTE: Verifique se essa é a rota exata no seu Back-end para o Admin
-      await api.post('/auth/esqueci-senha', { email })
-      
-      // Se deu sucesso, vai para a tela de confirmação
+      await esqueciSenha(email)
       navigate('/admin/email-enviado')
       
     } catch (error: any) {

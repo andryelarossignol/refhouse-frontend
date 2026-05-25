@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { AuthCard } from '../components/AuthCard'
-import api from '../services/api' 
+import { AuthCard } from '../components/auth/AuthCard'
+import { loginArbitro } from '../services/authService'
 
 function UserIcon() {
   return (
@@ -86,12 +86,7 @@ export function LoginPage() {
     setTemErro(false)
 
     try {
-      const response = await api.post('/auth/arbitro/login', { 
-        cpf, 
-        senha 
-      })
-
-      const { token, nome } = response.data
+      const { token, nome } = await loginArbitro(cpf, senha)
 
       localStorage.setItem('@Refhouse:token', token)
       localStorage.setItem('@Refhouse:user', JSON.stringify({ nome, role: 'arbitro' }))

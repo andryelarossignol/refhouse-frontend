@@ -1,7 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import api from '../services/api'
+import { useDisponibilidade } from '../hooks/useDisponibilidade'
 import { ArbitroLayout } from '../components/layouts/ArbitroLayout'
+import { ConfirmModal } from '../components/common/ConfirmModal'
+import { useToast } from '../context/ToastContext'
 
 const SuccessIcon = () => (
   <svg viewBox="0 0 24 24" fill="#22c55e" width="64" height="64" style={{ margin: '0 auto 1rem', display: 'block' }}>
@@ -9,48 +11,16 @@ const SuccessIcon = () => (
   </svg>
 )
 
-interface DiaAgenda { data: string; horarios: string[]; }
-interface Periodo { id: number; inicio_jogos: string; fim_jogos: string; }
-
 export function AvailabilityPage() {
   const navigate = useNavigate()
-  const [loading, setLoading] = useState(true)
-  const [submitting, setSubmitting] = useState(false)
-  const [mensagemVazia, setMensagemVazia] = useState('')
-  const [showSuccessModal, setShowSuccessModal] = useState(false)
-
-  const [layoutData, setLayoutData] = useState<any>(null)
-  const [periodo, setPeriodo] = useState<Periodo | null>(null)
-  const [agenda, setAgenda] = useState<DiaAgenda[]>([])
+  const { loading, submitting, layoutData, periodo, agenda, mensagemVazia, nomeUsuario, enviar } = useDisponibilidade()
+  const { showToast } = useToast()
   const [selecionados, setSelecionados] = useState<Record<string, string[]>>({})
-
-  const user = JSON.parse(localStorage.getItem('@Refhouse:user') || '{}')
-  const nomeUsuario = layoutData?.arbitro?.nome || user.nome || 'Árbitro'
-
-  useEffect(() => {
-    async function carregarDados() {
-      try {
-        setLoading(true)
-        const [dashRes, agendaRes] = await Promise.all([api.get('/arbitros/dashboard'), api.get('/disponibilidade/agenda')])
-        setLayoutData(dashRes.data)
-
-        if (agendaRes.data.mensagem) {
-          setMensagemVazia(agendaRes.data.mensagem)
-        } else {
-          setPeriodo(agendaRes.data.periodo)
-          setAgenda(agendaRes.data.agenda)
-        }
-      } catch (error) {
-        console.error("Erro ao carregar dados:", error)
-      } finally {
-        setLoading(false)
-      }
-    }
-    carregarDados()
-  }, [])
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
+  const [showConfirmVazio, setShowConfirmVazio] = useState(false)
 
   const formatarDataCard = (dataIso: string) => {
-    const dataObj = new Date(dataIso + 'T00:00:00') 
+    const dataObj = new Date(dataIso + 'T00:00:00')
     const diasSemana = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']
     return `${diasSemana[dataObj.getDay()]} - ${String(dataObj.getDate()).padStart(2, '0')}/${String(dataObj.getMonth() + 1).padStart(2, '0')}`
   }
@@ -70,20 +40,20 @@ export function AvailabilityPage() {
     })
   }
 
-  const handleEnviar = async () => {
-    if (!periodo) return;
-    const horariosEnviados = Object.keys(selecionados).map(d => ({ data: d, horarios: selecionados[d] })).filter(item => item.horarios.length > 0) 
-    if (horariosEnviados.length === 0 && !window.confirm("Deseja enviar sua disponibilidade em branco?")) return;
-
+  const handleEnviarConfirmado = async () => {
+    setShowConfirmVazio(false)
     try {
-      setSubmitting(true)
-      await api.post('/disponibilidade/enviar', { periodoColetaId: periodo.id, horariosDisponiveis: horariosEnviados })
+      await enviar(selecionados)
       setShowSuccessModal(true)
     } catch (error: any) {
-      alert(error.response?.data?.erro || "Erro ao salvar disponibilidade.")
-    } finally {
-      setSubmitting(false)
+      showToast('error', error.response?.data?.erro || 'Erro ao salvar disponibilidade.')
     }
+  }
+
+  const handleEnviar = () => {
+    const temSelecionados = Object.values(selecionados).some(h => h.length > 0)
+    if (!temSelecionados) { setShowConfirmVazio(true); return }
+    handleEnviarConfirmado()
   }
 
   if (loading) return <ArbitroLayout nomeUsuario={nomeUsuario}><div style={{ padding: '2rem', textAlign: 'center' }}>Buscando agenda...</div></ArbitroLayout>
@@ -131,6 +101,17 @@ export function AvailabilityPage() {
           )}
         </div>
       </div>
+
+      {showConfirmVazio && (
+        <ConfirmModal
+          title="Enviar disponibilidade em branco?"
+          message="Você não selecionou nenhum horário. Deseja confirmar o envio sem disponibilidade?"
+          confirmLabel={submitting ? 'Enviando...' : 'Sim, enviar em branco'}
+          isLoading={submitting}
+          onConfirm={handleEnviarConfirmado}
+          onCancel={() => setShowConfirmVazio(false)}
+        />
+      )}
 
       {showSuccessModal && (
         <div className="profile-modal-backdrop" style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }}>

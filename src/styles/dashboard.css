@@ -1,0 +1,135 @@
+/* ==========================================
+   DASHBOARD: Grid, Cards e Saudação
+   ========================================== */
+
+.dashboard-greeting {
+  margin: 0 0 0.95rem;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.85fr);
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.dashboard-column {
+  display: grid;
+  gap: 1.35rem;
+}
+
+.dashboard-card {
+  background: #ffffff;
+  border: 1px solid #d9dde5;
+  border-radius: 0.35rem;
+  box-shadow: 0 2px 6px rgba(28, 36, 51, 0.1);
+  padding: 1.2rem 1.45rem 1rem;
+}
+
+.dashboard-card-title {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.dashboard-card-title svg {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.dashboard-card-title h2 {
+  margin: 0;
+  font-size: 1.12rem;
+  font-weight: 700;
+}
+
+.dashboard-card-title-accent {
+  color: #ff6b23;
+}
+
+.dashboard-card-title-accent h2 {
+  color: #151515;
+}
+
+.dashboard-divider {
+  height: 1px;
+  margin: 0.65rem 0 0.85rem;
+  background: #cfd4dd;
+}
+
+/* ── Escalas ─────────────────────────────── */
+.schedule-list {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.schedule-item {
+  display: grid;
+  gap: 0.28rem;
+}
+
+.schedule-item-last {
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 1rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid #eaedf2;
+}
+
+.schedule-item strong {
+  display: block;
+  margin-bottom: 0.18rem;
+  font-size: 0.98rem;
+}
+
+.schedule-item p,
+.availability-copy p {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.35;
+}
+
+/* ── Disponibilidade ─────────────────────── */
+.availability-copy {
+  display: grid;
+  gap: 1rem;
+  min-height: 8rem;
+}
+
+.status-success {
+  color: #2eb95d;
+  font-weight: 700;
+}
+
+.dashboard-card-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* ── Responsividade ─────────────────────── */
+@media (max-width: 1080px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .dashboard-greeting {
+    font-size: 1.65rem;
+  }
+
+  .dashboard-card {
+    padding: 1rem;
+  }
+
+  .schedule-item-last {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
+
+  .dashboard-card-actions {
+    justify-content: stretch;
+  }
+}

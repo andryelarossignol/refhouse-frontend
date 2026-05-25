@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
+import type { Aviso } from '../../types'
 
 // ==========================================
 // ÍCONES SVG DO LAYOUT DO ÁRBITRO
@@ -23,7 +24,7 @@ type BreadcrumbItem = {
 interface ArbitroLayoutProps {
   children: React.ReactNode;
   nomeUsuario: string;
-  avisos?: any[]; // Avisos para o sininho
+  avisos?: Aviso[];
   breadcrumbs?: BreadcrumbItem[];
 }
 

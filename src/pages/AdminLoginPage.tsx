@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { AuthCard } from '../components/AuthCard'
-// ATENÇÃO: Garanta que você tem o arquivo de API configurado neste caminho
-import api from '../services/api' 
+import { AuthCard } from '../components/auth/AuthCard'
+import { loginAdmin } from '../services/authService'
 
 // ==========================================
 // ÍCONES (Todos declarados para não dar erro)
@@ -98,22 +97,12 @@ export function AdminLoginPage() {
     setTemErro(false)
 
     try {
-      // Limpa os pontos antes de mandar para a API
       const cpfLimpo = cpf.replace(/\D/g, '')
+      const { token, admin } = await loginAdmin(cpfLimpo, senha)
 
-      // Chama a API do Back-end
-      const response = await api.post('/auth/login', { 
-        cpf: cpfLimpo, 
-        senha 
-      })
-
-      const { token, admin } = response.data
-
-      // Salva os dados no navegador
       localStorage.setItem('@Refhouse:token', token)
       localStorage.setItem('@Refhouse:user', JSON.stringify({ ...admin, role: 'admin' }))
 
-      // Vai para a Home
       navigate('/admin/dashboard')
       
     } catch (error: any) {

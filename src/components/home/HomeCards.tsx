@@ -1,32 +1,13 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import type { EscalaArbitro, DisponibilidadeStatus, EventoCalendarioArbitro } from '../../types'
+
+export type EscalaProps = EscalaArbitro
+export type DisponibilidadeProps = DisponibilidadeStatus
+export type EventoProps = EventoCalendarioArbitro
 
 // ==========================================
-// TIPAGENS DOS DADOS REAIS DA API
-// ==========================================
-export type EscalaProps = {
-  id: number
-  data: string
-  hora: string
-  local: string
-  categoria: string
-  confronto: string
-}
-
-export type DisponibilidadeProps = {
-  coletaId: number
-  inicio_jogos: string
-  fim_jogos: string
-  status: 'PENDENTE' | 'ENVIADA'
-}
-
-export type EventoProps = {
-  data: string // YYYY-MM-DD
-  status: 'escalado' | 'coleta'
-}
-
-// ==========================================
-// ÍCONES (Mantidos intactos do seu design!)
+// ÍCONES
 // ==========================================
 function CalendarIcon() {
   return (
@@ -74,13 +55,12 @@ function ChevronRightIcon() {
 // CARD 1: PRÓXIMAS ESCALAS
 // ==========================================
 export function UpcomingScalesCard({ escalas }: { escalas?: EscalaProps[] }) {
-  
-  // Função para formatar a data que vem do banco (ex: 2026-04-12 -> 12/04)
+  const navigate = useNavigate()
   const formatarData = (dataIso: string, hora: string) => {
-    const data = new Date(dataIso);
-    const dia = String(data.getUTCDate()).padStart(2, '0');
-    const mes = String(data.getUTCMonth() + 1).padStart(2, '0');
-    return `${dia}/${mes} - ${hora}`;
+    const data = new Date(dataIso)
+    const dia = String(data.getUTCDate()).padStart(2, '0')
+    const mes = String(data.getUTCMonth() + 1).padStart(2, '0')
+    return `${dia}/${mes} - ${hora}`
   }
 
   return (
@@ -108,7 +88,7 @@ export function UpcomingScalesCard({ escalas }: { escalas?: EscalaProps[] }) {
               </div>
 
               {index === escalas.length - 1 && (
-                <button type="button" className="dashboard-button schedule-button" onClick={() => alert('Rota para lista completa em breve')}>
+                <button type="button" className="dashboard-button schedule-button" onClick={() => navigate('/minhas-escalas')}>
                   Ver mais
                 </button>
               )}
@@ -124,7 +104,7 @@ export function UpcomingScalesCard({ escalas }: { escalas?: EscalaProps[] }) {
 // CARD 2: DISPONIBILIDADE
 // ==========================================
 export function AvailabilityCard({ disponibilidade }: { disponibilidade?: DisponibilidadeProps }) {
-  const navigate = useNavigate(); // 👇 O HOOK FOI ADICIONADO AQUI!
+  const navigate = useNavigate()
 
   if (!disponibilidade) {
     return (
@@ -143,15 +123,14 @@ export function AvailabilityCard({ disponibilidade }: { disponibilidade?: Dispon
     )
   }
 
-  // Formata o período (ex: 14 - 20 Abril)
-  const dataInicio = new Date(disponibilidade.inicio_jogos);
-  const dataFim = new Date(disponibilidade.fim_jogos);
-  const diaInicio = dataInicio.getUTCDate();
-  const diaFim = dataFim.getUTCDate();
-  const mes = dataFim.toLocaleString('pt-BR', { month: 'long', timeZone: 'UTC' });
-  const mesCapitalizado = mes.charAt(0).toUpperCase() + mes.slice(1);
+  const dataInicio = new Date(disponibilidade.inicio_jogos)
+  const dataFim = new Date(disponibilidade.fim_jogos)
+  const diaInicio = dataInicio.getUTCDate()
+  const diaFim = dataFim.getUTCDate()
+  const mes = dataFim.toLocaleString('pt-BR', { month: 'long', timeZone: 'UTC' })
+  const mesCapitalizado = mes.charAt(0).toUpperCase() + mes.slice(1)
 
-  const isEnviada = disponibilidade.status === 'ENVIADA';
+  const isEnviada = disponibilidade.status === 'ENVIADA'
 
   return (
     <section className="dashboard-card">
@@ -170,20 +149,20 @@ export function AvailabilityCard({ disponibilidade }: { disponibilidade?: Dispon
           <strong>Semana:</strong> {diaInicio} - {diaFim} {mesCapitalizado}
         </p>
         <p>
-          <strong>Status:</strong> 
-          <span className={isEnviada ? "status-success" : ""} style={{ color: isEnviada ? '#16a34a' : '#ea580c', fontWeight: 600, marginLeft: '4px' }}>
+          <strong>Status:</strong>
+          <span className={isEnviada ? 'status-success' : ''} style={{ color: isEnviada ? '#16a34a' : '#ea580c', fontWeight: 600, marginLeft: '4px' }}>
             {isEnviada ? 'Disponibilidade Enviada' : 'Pendente'}
           </span>
         </p>
       </div>
 
       <div className="dashboard-card-actions">
-        <button 
-          type="button" 
-          className="dashboard-button" 
-          onClick={() => navigate('/disponibilidade')} /* 👇 E AQUI O REDIRECIONAMENTO ACONTECE */
-          style={{ 
-            backgroundColor: isEnviada ? '#f3f4f6' : '#ea580c', 
+        <button
+          type="button"
+          className="dashboard-button"
+          onClick={() => navigate('/disponibilidade')}
+          style={{
+            backgroundColor: isEnviada ? '#f3f4f6' : '#ea580c',
             color: isEnviada ? '#374151' : '#ffffff',
             border: isEnviada ? '1px solid #d1d5db' : 'none',
             padding: '0.6rem 1.2rem',
@@ -200,45 +179,33 @@ export function AvailabilityCard({ disponibilidade }: { disponibilidade?: Dispon
 }
 
 // ==========================================
-// CARD 3: CALENDÁRIO MÁGICO (Timeline)
+// CARD 3: CALENDÁRIO / TIMELINE
 // ==========================================
 export function TimelineCard({ eventos }: { eventos?: EventoProps[] }) {
-  // Lógica para gerar o calendário dinâmico
-  const [dataAtual, setDataAtual] = useState(new Date());
-  
-  const ano = dataAtual.getFullYear();
-  const mes = dataAtual.getMonth();
+  const [dataAtual, setDataAtual] = useState(new Date())
 
-  const diasNoMes = new Date(ano, mes + 1, 0).getDate();
-  const primeiroDiaDaSemana = new Date(ano, mes, 1).getDay(); // 0 (Dom) a 6 (Sáb)
+  const ano = dataAtual.getFullYear()
+  const mes = dataAtual.getMonth()
+  const diasNoMes = new Date(ano, mes + 1, 0).getDate()
+  const primeiroDiaDaSemana = new Date(ano, mes, 1).getDay()
 
-  const nomesMeses = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+  const nomesMeses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']
 
-  // Monta o array do calendário mesclando com os eventos do Back-end
-  const calendarDays = [];
-  
-  // Preenche os espaços vazios antes do dia 1
+  const calendarDays = []
   for (let i = 0; i < primeiroDiaDaSemana; i++) {
-    calendarDays.push({ value: '', tone: undefined });
+    calendarDays.push({ value: '', tone: undefined })
   }
-
-  // Preenche os dias do mês
   for (let dia = 1; dia <= diasNoMes; dia++) {
-    const dataString = `${ano}-${String(mes + 1).padStart(2, '0')}-${String(dia).padStart(2, '0')}`;
-    
-    // Verifica se esse dia tem algum evento vindo do Back-end
-    const evento = eventos?.find(e => e.data === dataString);
-    
-    let tone = undefined;
-    if (evento?.status === 'escalado') tone = 'blue';
-    if (evento?.status === 'coleta') tone = 'green';
-
-    calendarDays.push({ value: String(dia), tone });
+    const dataString = `${ano}-${String(mes + 1).padStart(2, '0')}-${String(dia).padStart(2, '0')}`
+    const evento = eventos?.find(e => e.data === dataString)
+    let tone: string | undefined = undefined
+    if (evento?.status === 'escalado') tone = 'blue'
+    if (evento?.status === 'coleta') tone = 'green'
+    calendarDays.push({ value: String(dia), tone })
   }
 
-  // Funções de navegação do calendário
-  const mesAnterior = () => setDataAtual(new Date(ano, mes - 1, 1));
-  const proximoMes = () => setDataAtual(new Date(ano, mes + 1, 1));
+  const mesAnterior = () => setDataAtual(new Date(ano, mes - 1, 1))
+  const proximoMes = () => setDataAtual(new Date(ano, mes + 1, 1))
 
   return (
     <section className="dashboard-card timeline-card">
@@ -257,10 +224,10 @@ export function TimelineCard({ eventos }: { eventos?: EventoProps[] }) {
         </button>
 
         <div className="timeline-selects">
-          <select aria-label="Mes" value={nomesMeses[mes]} readOnly>
+          <select aria-label="Mes" value={nomesMeses[mes]} onChange={() => {}}>
             <option>{nomesMeses[mes]}</option>
           </select>
-          <select aria-label="Ano" value={ano} readOnly>
+          <select aria-label="Ano" value={ano} onChange={() => {}}>
             <option>{ano}</option>
           </select>
         </div>

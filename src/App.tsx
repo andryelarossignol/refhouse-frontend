@@ -1,7 +1,8 @@
 import './App.css'
 import { Navigate, Route, Routes } from 'react-router-dom'
-import { AdminAuthShell } from './components/AdminAuthShell'
-import { AuthShell } from './components/AuthShell'
+import { ToastProvider } from './context/ToastContext'
+import { AdminAuthShell } from './components/auth/AdminAuthShell'
+import { AuthShell } from './components/auth/AuthShell'
 import { AdminEmailSentPage } from './pages/AdminEmailSentPage'
 import { AdminForgotPasswordPage } from './pages/AdminForgotPasswordPage'
 import { AdminLoginPage } from './pages/AdminLoginPage'
@@ -23,6 +24,7 @@ import { AdminPerfilPage } from './pages/AdminPerfilPage'
 
 function App() {
   return (
+    <ToastProvider>
     <Routes>
       <Route path="/" element={<Navigate to="/home" replace />} />
       <Route
@@ -94,6 +96,7 @@ function App() {
       <Route path="*" element={<Navigate to="/home" replace />} />
         
     </Routes>
+    </ToastProvider>
   )
 }
 

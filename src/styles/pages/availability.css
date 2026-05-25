@@ -1,0 +1,234 @@
+/* ==========================================
+   PAGE: Disponibilidade (árbitro)
+   ========================================== */
+
+.availability-content {
+  padding-top: 2rem;
+}
+
+.availability-card {
+  display: grid;
+  gap: 1.1rem;
+}
+
+.availability-card-copy h1 {
+  margin: 0;
+  font-size: 1.85rem;
+  font-weight: 700;
+}
+
+.availability-card-copy h1 span {
+  margin-left: 0.45rem;
+  color: #595d65;
+  font-size: 1.12rem;
+  font-weight: 600;
+}
+
+.availability-card-copy p {
+  max-width: 62rem;
+  margin: 0.85rem 0 0;
+  color: #4a4d53;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.availability-panel {
+  background: #ffffff;
+  border: 1px solid #d9dde5;
+  border-radius: 0.3rem;
+  box-shadow: 0 2px 6px rgba(28, 36, 51, 0.1);
+  padding: 1.1rem 1rem 0.9rem;
+}
+
+.availability-panel-copy h2 {
+  margin: 0;
+  font-size: 1.08rem;
+  font-weight: 700;
+}
+
+.availability-panel-copy p {
+  margin: 0.35rem 0 0;
+  color: #5f646d;
+  font-size: 0.88rem;
+}
+
+.availability-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+  margin-top: 1rem;
+}
+
+.availability-day-card {
+  min-height: 6.1rem;
+  border: 1px solid #d4d8e1;
+  border-radius: 0.28rem;
+  padding: 0.65rem 0.8rem;
+  background: #ffffff;
+}
+
+.availability-day-card strong {
+  display: block;
+  color: #2b2c30;
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.availability-slot-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem 1.1rem;
+  margin-top: 0.8rem;
+}
+
+.availability-slot {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: #686c74;
+  font-size: 0.73rem;
+}
+
+.availability-slot input {
+  margin: 0;
+  width: 0.88rem;
+  height: 0.88rem;
+  accent-color: #ff6b23;
+}
+
+.availability-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.availability-submit-button {
+  min-width: 11.5rem;
+}
+
+/* Modal */
+.availability-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 55;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.68);
+  backdrop-filter: blur(2px);
+}
+
+.availability-success-modal {
+  width: min(100%, 25rem);
+  display: grid;
+  justify-items: center;
+  gap: 1rem;
+  padding: 2rem 1.8rem 1.5rem;
+  background: #ffffff;
+  border-radius: 0.35rem;
+  box-shadow: 0 10px 28px rgba(17, 24, 34, 0.16);
+}
+
+.availability-success-modal .success-icon {
+  width: 4.15rem;
+  height: 4.15rem;
+}
+
+.availability-success-copy {
+  text-align: center;
+}
+
+.availability-success-copy h2 {
+  max-width: 17rem;
+  margin: 0;
+  font-size: 1.6rem;
+  line-height: 1.1;
+}
+
+.availability-success-copy p {
+  margin: 0.7rem 0 0;
+  color: #43454a;
+  font-size: 0.94rem;
+  line-height: 1.35;
+}
+
+.availability-success-button {
+  min-width: 10.8rem;
+}
+
+/* Estado bloqueado */
+.availability-card-copy-locked p {
+  margin-top: 0.7rem;
+}
+
+.availability-empty-state {
+  display: grid;
+  justify-items: center;
+  gap: 0.9rem;
+  min-height: 23rem;
+  padding: 2rem 1.5rem;
+  background: linear-gradient(180deg, #f8f4fa 0%, #fbf8fc 100%);
+}
+
+.availability-empty-illustration {
+  width: min(100%, 21rem);
+  height: auto;
+}
+
+.availability-empty-state h2 {
+  margin: 0;
+  font-size: 1.95rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.availability-empty-button {
+  min-width: 10.5rem;
+}
+
+/* ── Responsividade ─────────────────────── */
+@media (max-width: 860px) {
+  .availability-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .availability-card-copy h1 {
+    font-size: 1.55rem;
+  }
+
+  .availability-card-copy h1 span {
+    display: block;
+    margin: 0.3rem 0 0;
+  }
+
+  .availability-panel {
+    padding: 1rem 0.85rem 0.85rem;
+  }
+
+  .availability-day-card {
+    min-height: auto;
+  }
+
+  .availability-slot-list {
+    gap: 0.6rem 0.85rem;
+  }
+
+  .availability-success-modal {
+    padding: 1.6rem 1.1rem 1.2rem;
+  }
+
+  .availability-success-copy h2 {
+    font-size: 1.35rem;
+  }
+
+  .availability-empty-state {
+    min-height: 19rem;
+    padding: 1.5rem 1rem;
+  }
+
+  .availability-empty-state h2 {
+    font-size: 1.55rem;
+  }
+}

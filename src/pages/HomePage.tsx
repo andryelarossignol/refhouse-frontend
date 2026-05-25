@@ -1,30 +1,9 @@
-import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import api from '../services/api' 
-import { AvailabilityCard, TimelineCard, UpcomingScalesCard } from '../components/HomeCards' // Caminho novo!
-import { ArbitroLayout } from '../components/layouts/ArbitroLayout' // Layout novo!
+import { useArbitroDashboard } from '../hooks/useArbitroDashboard'
+import { AvailabilityCard, TimelineCard, UpcomingScalesCard } from '../components/home/HomeCards'
+import { ArbitroLayout } from '../components/layouts/ArbitroLayout'
 
 export function HomePage() {
-  const navigate = useNavigate()
-  const [data, setData] = useState<any>(null)
-  const [loading, setLoading] = useState(true)
-
-  const user = JSON.parse(localStorage.getItem('@Refhouse:user') || '{}')
-  const nomeUsuario = data?.arbitro?.nome || user.nome || 'Árbitro'
-
-  useEffect(() => {
-    async function fetchDashboard() {
-      try {
-        const response = await api.get('/arbitros/dashboard') 
-        setData(response.data)
-      } catch (error) {
-        console.error("Erro ao carregar dashboard:", error)
-      } finally {
-        setLoading(false)
-      }
-    }
-    fetchDashboard()
-  }, [])
+  const { data, loading, nomeUsuario } = useArbitroDashboard()
 
   if (loading) {
     return (

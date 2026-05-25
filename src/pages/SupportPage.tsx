@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { SuccessIcon } from '../components/SuccessIcon'
-import { DashboardLayout } from '../components/home/DashboardLayout'
+import { SuccessIcon } from '../components/common/SuccessIcon'
+import { ArbitroLayout } from '../components/layouts/ArbitroLayout'
 
 function HeadsetIcon() {
   return (
@@ -52,79 +52,80 @@ export function SupportPage() {
   const navigate = useNavigate()
   const [submitted, setSubmitted] = useState(false)
 
+  const user = JSON.parse(localStorage.getItem('@Refhouse:user') || '{}')
+  const nomeUsuario = user.nome || 'Árbitro'
+
   return (
-    <DashboardLayout>
-      <section className="dashboard-content">
-        <section className="support-page">
-          <div className="support-copy">
-            <h1>Suporte</h1>
-            <p>Precisa de ajuda? Entre em contato com nosso suporte ou com o organizador do campeonato</p>
-          </div>
+    <ArbitroLayout nomeUsuario={nomeUsuario} breadcrumbs={[{ label: 'Suporte' }]}>
+      <section className="support-page">
+        <div className="support-copy">
+          <h1>Suporte</h1>
+          <p>Precisa de ajuda? Entre em contato com nosso suporte ou com o organizador do campeonato</p>
+        </div>
 
-          <div className="support-grid">
-            <section className="support-form-card">
-              <div className="support-form-grid">
-                <label className="profile-field">
-                  <span>Tipo de Contato*:</span>
-                  <select defaultValue="">
-                    <option value="" disabled>
-                      Selecione o tipo de contato
-                    </option>
-                    <option>Suporte técnico</option>
-                    <option>Dúvida sobre escala</option>
-                    <option>Financeiro</option>
-                  </select>
-                </label>
+        <div className="support-grid">
+          <section className="support-form-card">
+            <div className="support-form-grid">
+              <label className="profile-field">
+                <span>Tipo de Contato*:</span>
+                <select defaultValue="">
+                  <option value="" disabled>
+                    Selecione o tipo de contato
+                  </option>
+                  <option>Suporte técnico</option>
+                  <option>Dúvida sobre escala</option>
+                  <option>Financeiro</option>
+                </select>
+              </label>
 
-                <label className="profile-field">
-                  <span>Assunto*:</span>
-                  <input type="text" placeholder="Digite o assunto" />
-                </label>
+              <label className="profile-field">
+                <span>Assunto*:</span>
+                <input type="text" placeholder="Digite o assunto" />
+              </label>
 
-                <label className="profile-field support-message-field">
-                  <span>Mensagem*:</span>
-                  <textarea placeholder="Descreva sua dúvida, problema ou mensagem de forma clara e objetiva" />
-                </label>
+              <label className="profile-field support-message-field">
+                <span>Mensagem*:</span>
+                <textarea placeholder="Descreva sua dúvida, problema ou mensagem de forma clara e objetiva" />
+              </label>
 
-                <p className="support-help-text">Responderemos o mais rápido possível, fique de olho nos canais de contato.</p>
-              </div>
+              <p className="support-help-text">Responderemos o mais rápido possível, fique de olho nos canais de contato.</p>
+            </div>
 
-              <div className="support-actions">
-                <button type="button" className="dashboard-button support-submit-button" onClick={() => setSubmitted(true)}>
-                  Enviar Mensagem
-                </button>
-              </div>
-            </section>
+            <div className="support-actions">
+              <button type="button" className="dashboard-button support-submit-button" onClick={() => setSubmitted(true)}>
+                Enviar Mensagem
+              </button>
+            </div>
+          </section>
 
-            <aside className="support-contact-card">
-              <h2>Informações de Contato</h2>
-              <div className="support-contact-divider" />
+          <aside className="support-contact-card">
+            <h2>Informações de Contato</h2>
+            <div className="support-contact-divider" />
 
-              <div className="support-contact-copy">
-                <div className="support-contact-headline">
-                  <HeadsetIcon />
-                  <div>
-                    <strong>Precisa de mais alguma coisa?</strong>
-                    <p>Fale conosco diretamente.</p>
-                  </div>
+            <div className="support-contact-copy">
+              <div className="support-contact-headline">
+                <HeadsetIcon />
+                <div>
+                  <strong>Precisa de mais alguma coisa?</strong>
+                  <p>Fale conosco diretamente.</p>
                 </div>
-
-                <p className="support-contact-item">
-                  <PhoneIcon />
-                  <span>(85) 99845-1234</span>
-                </p>
-
-                <p className="support-contact-item">
-                  <MailIcon />
-                  <span>suporte@refhouse.com</span>
-                </p>
               </div>
-            </aside>
-          </div>
-        </section>
+
+              <p className="support-contact-item">
+                <PhoneIcon />
+                <span>(85) 99845-1234</span>
+              </p>
+
+              <p className="support-contact-item">
+                <MailIcon />
+                <span>suporte@refhouse.com</span>
+              </p>
+            </div>
+          </aside>
+        </div>
       </section>
 
-      {submitted ? <SupportSuccessModal onBackHome={() => navigate('/home')} /> : null}
-    </DashboardLayout>
+      {submitted && <SupportSuccessModal onBackHome={() => navigate('/home')} />}
+    </ArbitroLayout>
   )
 }
